@@ -22,7 +22,7 @@ Read the documentation for usage
 
 ## Docker React 
 eliminates the need to manage host systems and instead lets us specify a Docker file that then lists all the dependencies of the project
-<img  src="https://developers.redhat.com/sites/default/files/styles/article_feature/public/blog/2014/05/homepage-docker-logo.png?itok=zx0e-vcP"/>
+<img style="height="50%" width="50%" src="https://developers.redhat.com/sites/default/files/styles/article_feature/public/blog/2014/05/homepage-docker-logo.png?itok=zx0e-vcP"/>
 
 Raw Blame
 
