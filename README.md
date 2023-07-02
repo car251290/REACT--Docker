@@ -1,16 +1,16 @@
 # REACT--Docker  Whalecome 🐳 
 React- Docker
 
-## Jenkis deployment for arquitecture on CI/CD
+## Jenkins deployment for architecture on CI/CD
 
 ## What is Jenkins?
-Jenkins is a self-contained, open source automation server which can be used to automate all sorts of tasks related to building, testing, and delivering or deploying software.
+Jenkins is a self-contained, open source automation server that can automate all sorts of tasks related to building, testing, and delivering or deploying software.
 
 Jenkins can be installed through native system packages, Docker, or even run standalone by any machine with a Java Runtime Environment (JRE) installed.
 
 Jenkins Continuous Integration and Delivery server.
 
-This is a fully functional Jenkins server, based on the weekly and LTS releases .
+This is a fully functional Jenkins server, based on the weekly and LTS releases.
 
 logo
 
@@ -22,7 +22,7 @@ Read the documentation for usage
 
 ## Docker React 
 eliminates the need to manage host systems and instead lets us specify a Docker file that then lists all the dependencies of the project
-<img style="height="50%" width="50%" src="https://developers.redhat.com/sites/default/files/styles/article_feature/public/blog/2014/05/homepage-docker-logo.png?itok=zx0e-vcP"/>
+<img style="height="50% width="50%" src="https://developers.redhat.com/sites/default/files/styles/article_feature/public/blog/2014/05/homepage-docker-logo.png?itok=zx0e-vcP"/>
 
 Raw Blame
 
