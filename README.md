@@ -1,15 +1,5 @@
 # REACT--Docker  Whalecome 🐳 
 React- Docker
-
-## Jenkins deployment for architecture on CI/CD
-
-## What is Jenkins?
-Jenkins is a self-contained, open source automation server that can automate all sorts of tasks related to building, testing, and delivering or deploying software.
-
-Jenkins can be installed through native system packages, Docker, or even run standalone by any machine with a Java Runtime Environment (JRE) installed.
-
-Jenkins Continuous Integration and Delivery server.
-
 This is a fully functional Jenkins server, based on the weekly and LTS releases.
 
 logo
