@@ -21,21 +21,13 @@ Official Jenkins Docker image
 
 Docker Stars Docker Pulls Join the chat at https://gitter.im/jenkinsci/docker
 
-The Jenkins Continuous Integration and Delivery server available on Docker Hub.
+The Jenkins Continuous Integration and Delivery server is available on Docker Hub.
 
 This is a fully functional Jenkins server. https://jenkins.io/.
 
 
 
 Usage
-
-docker run -p 8080:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-jdk11
-NOTE: read the section Connecting agents below for the role of the 50000 port mapping.
-
-This will store the workspace in /var/jenkins_home. All Jenkins data lives in there - including plugins and configuration. You will probably want to make that an explicit volume so you can manage it and attach to another container for upgrades :
-
-docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
-This will automatically create a 'jenkins_home' docker volume on the host machine. Docker volumes retain their content even when the container is stopped, started, or deleted.
 
 NOTE: Avoid using a bind mount from a folder on the host machine into /var/jenkins_home, as this might result in file permission issues (the user used inside the container might not have rights to the folder on the host machine). If you really need to bind mount jenkins_home, ensure that the directory on the host is accessible by the jenkins user inside the container (jenkins user - uid 1000) or use -u some_other_user parameter with docker run.
 
@@ -164,7 +156,7 @@ You can run the CLI manually in Dockerfile:
 
 FROM jenkins/jenkins:lts-jdk11
 RUN jenkins-plugin-cli --plugins pipeline-model-definition github-branch-source:1.8
-Furthermore it is possible to pass a file that contains this set of plugins (with or without line breaks).
+Furthermore, it is possible to pass a file that contains this set of plugins (with or without line breaks).
 
 FROM jenkins/jenkins:lts-jdk11
 COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
