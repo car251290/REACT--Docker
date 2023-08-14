@@ -41,22 +41,6 @@ If your volume is inside a container - you can use docker cp $ID:/var/jenkins_ho
 
 For more info check Docker docs section on Use volumes
 
-Setting the number of executors
-
-You can define the number of executors on the Jenkins built-in node using a groovy script. By default it is set to 2 executors, but you can extend the image and change it to your desired number of executors (recommended 0 executors on the built-in node) :
-
-executors.groovy
-
-import jenkins.model.*
-Jenkins.instance.setNumExecutors(0) // Recommended to not run builds on the built-in node
-and Dockerfile
-
-FROM jenkins/jenkins:lts
-COPY --chown=jenkins:jenkins executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
-Connecting agents
-
-You can run builds on the controller out of the box. The Jenkins project recommends that no executors be enabled on the controller.
-
 In order to connect agents through an inbound TCP connection, map the port: -p 50000:50000. That port will be used when you connect agents to the controller.
 
 If you are only using SSH (outbound) build agents, this port is not required, as connections are established from the controller. If you connect agents using web sockets (since Jenkins 2.217), the TCP agent port is not used either.
@@ -140,8 +124,6 @@ JENKINS_INCREMENTALS_REPO_MIRROR - Defines Maven mirror to be used to download p
 JENKINS_UC_DOWNLOAD - Download url of the Update Center. Default value: $JENKINS_UC/download
 It is possible to override the environment variables in images.
 
-❗ Note that changing update center variables will not change the Update Center being used by Jenkins runtime.
-
 Installing Custom Plugins
 
 Installing prebuilt, custom plugins can be accomplished by copying the plugin HPI file into /usr/share/jenkins/ref/plugins/ within the Dockerfile:
@@ -169,36 +151,11 @@ Here is an example to get the list of plugins from an existing server:
 JENKINS_HOST=username:password@myhost.com:port
 curl -sSL "http://$JENKINS_HOST/pluginManager/api/xml?depth=1&xpath=/*/*/shortName|/*/*/version&wrapper=plugins" | perl -pe 's/.*?<shortName>([\w-]+).*?<version>([^<]+)()(<\/\w+>)+/\1 \2\n/g'|sed 's/ /:/'
 Example Output:
-
-cucumber-testresult-plugin:0.8.2
-pam-auth:1.1
-matrix-project:1.4.1
-script-security:1.13
-...
-For 2.x-derived images, you may also want to
-
-RUN echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
-to indicate that this Jenkins installation is fully configured. Otherwise a banner will appear prompting the user to install additional plugins, which may be inappropriate.
-
 Updating plugins file
-
 The plugin-installation-manager-tool supports updating the plugin file for you.
 
-Example command:
 
-JENKINS_IMAGE=jenkins/jenkins:lts-jdk11
-docker run -it ${JENKINS_IMAGE} bash -c "stty -onlcr && jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt --available-updates --output txt" >  plugins2.txt
-mv plugins2.txt plugins.txt
-Upgrading
 
-All the data needed is in the /var/jenkins_home directory - so depending on how you manage that - depends on how you upgrade. Generally - you can copy it out - and then "docker pull" the image again - and you will have the latest LTS - you can then start up with -v pointing to that data (/var/jenkins_home) and everything will be as you left it.
 
-As always - please ensure that you know how to drive docker - especially volume handling!
 
-Upgrading plugins
 
-By default, plugins will be upgraded if they haven't been upgraded manually and if the version from the docker image is newer than the version in the container. Versions installed by the docker image are tracked through a marker file.
-
-To force upgrades of plugins that have been manually upgraded, run the docker image with -e PLUGINS_FORCE_UPGRADE=true.
-
-The default behaviour when upgrading from a docker image that didn't write marker files is to leave existing plugins in place. If you want to upgrade existing plugins without marker you may run the docker image with -e TRY_UPGRADE_IF_NO_MARKER=true. Then plugins will be upgraded if the version provided by the docker image is newer.
