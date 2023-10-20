@@ -12,7 +12,10 @@ To use the latest weekly: docker pull jenkins/jenkins:jdk11
 
 ## Docker React 
 eliminates the need to manage host systems and instead lets us specify a Docker file that then lists all the dependencies of the project
-<img   style=width:20%;height:20%  src="https://developers.redhat.com/sites/default/files/styles/article_feature/public/blog/2014/05/homepage-docker-logo.png?itok=zx0e-vcP"/>
+<div>
+  <img   style=width:20%;height:20%  src="https://developers.redhat.com/sites/default/files/styles/article_feature/public/blog/2014/05/homepage-docker-logo.png?itok=zx0e-vcP"/>
+
+</div>
 
 
 
