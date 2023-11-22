@@ -15,7 +15,7 @@ eliminates the need to manage host systems and instead lets us specify a Docker 
 lists all the dependencies of the project.
 
 <div>
-  <img   style=width:20%;height:20%  src="https://developers.redhat.com/sites/default/files/styles/article_feature/public/blog/2014/05/homepage-docker-logo.png?itok=zx0e-vcP"/>
+  <img  style=width:20%;height:20%  src="https://developers.redhat.com/sites/default/files/styles/article_feature/public/blog/2014/05/homepage-docker-logo.png?itok=zx0e-vcP"/>
 
 </div>
 
@@ -26,13 +26,6 @@ Docker Stars Docker Pulls Join the chat at https://gitter.im/jenkinsci/docker
 The Jenkins Continuous Integration and Delivery server is available on Docker Hub.
 
 This is a fully functional Jenkins server. https://jenkins.io/.
-
-Usage
-
-NOTE: Avoid using a bind mount from a folder on the host machine into /var/jenkins_home, as this might result in file permission issues (the user used inside the container might not have rights to the folder on the host machine). If you really need to bind mount jenkins_home, ensure that the directory on the host is accessible by the jenkins user inside the container (jenkins user - uid 1000) or use -u some_other_user parameter with docker run.
-
-docker run -d -v jenkins_home:/var/jenkins_home -p 8080:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-jdk11
-This will run Jenkins in detached mode with port forwarding and volume added. You can access logs with command 'docker logs CONTAINER_ID' in order to check first login token. ID of container will be returned from output of command above.
 
 Backing up data
 
@@ -58,15 +51,6 @@ JVM options specifically for the Jenkins controller should be set through JENKIN
 Configuring logging
 
 Jenkins logging can be configured through a properties file and java.util.logging.config.file Java property. For example:
-
-mkdir data
-cat > data/log.properties <<EOF
-handlers=java.util.logging.ConsoleHandler
-jenkins.level=FINEST
-java.util.logging.ConsoleHandler.level=FINEST
-EOF
-docker run --name myjenkins -p 8080:8080 -p 50000:50000 --restart=on-failure --env JAVA_OPTS="-Djava.util.logging.config.file=/var/jenkins_home/log.properties" -v `pwd`/data:/var/jenkins_home jenkins/jenkins:lts-jdk11
-Configuring reverse proxy
 
 If you want to install Jenkins behind a reverse proxy with a prefix, example: mysite.com/jenkins, you need to add environment variable JENKINS_OPTS="--prefix=/jenkins" and then follow the below procedures to configure your reverse proxy, which will depend if you have Apache or Nginx:
 
@@ -147,15 +131,7 @@ When jenkins container starts, it will check JENKINS_HOME has this reference con
 
 In case you do want to override, append '.override' to the name of the reference file. E.g. a file named /usr/share/jenkins/ref/config.xml.override will overwrite an existing config.xml file in JENKINS_HOME.
 
-Also see JENKINS-24986
 
-Here is an example to get the list of plugins from an existing server:
-
-JENKINS_HOST=username:password@myhost.com:port
-curl -sSL "http://$JENKINS_HOST/pluginManager/api/xml?depth=1&xpath=/*/*/shortName|/*/*/version&wrapper=plugins" | perl -pe 's/.*?<shortName>([\w-]+).*?<version>([^<]+)()(<\/\w+>)+/\1 \2\n/g'|sed 's/ /:/'
-Example Output:
-Updating plugins file
-The plugin-installation-manager-tool supports updating the plugin file for you.
 
 
 
